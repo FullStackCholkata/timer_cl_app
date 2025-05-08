@@ -10,7 +10,7 @@ int parse_time(int argc, char *argv[], Timer* timer) {
     }
 
     char *time_str =  argv[1];
-    char* token;
+    int token;
 
     // Parse hours
     token = strtok(time_str, ":");
