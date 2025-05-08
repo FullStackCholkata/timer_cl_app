@@ -13,7 +13,6 @@ int main(int argc, char *argv[]) {
     printf("Hours: %d\n", this_timer.hours);
     printf("Minutes: %d\n", this_timer.minutes);
     printf("Seconds: %d\n", this_timer.seconds);
-    printf("\n");  // Add an extra newline at the end
 
     return 0;
 }

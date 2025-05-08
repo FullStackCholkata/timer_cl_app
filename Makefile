@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -I./include
 SRCS = src/timer.c src/main.c
 OBJS = $(SRCS:.c=.o)
-TARGET = timer.exe
+TARGET = timer
 
 all: $(TARGET)
 

@@ -11,3 +11,7 @@ Thumbs.db
 
 # Debug files
 *.pdb
+
+# Compiled binaries
+timer
+timer.exe

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "timer.h" 
 
 int parse_time(int argc, char *argv[], Timer* timer) {
@@ -9,8 +10,8 @@ int parse_time(int argc, char *argv[], Timer* timer) {
         exit(EXIT_FAILURE);
     }
 
-    char *time_str =  argv[1];
-    int token;
+    char *time_str = strdup(argv[1]);
+    char* token;
 
     // Parse hours
     token = strtok(time_str, ":");
