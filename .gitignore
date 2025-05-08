@@ -1,0 +1,13 @@
+# Build artifacts
+*.o
+*.exe
+
+# IDE settings
+.vscode/
+
+# Windows system files
+Thumbs.db
+*.swp
+
+# Debug files
+*.pdb
