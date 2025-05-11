@@ -8,5 +8,6 @@ typedef struct {
 } Timer;
 
 int parse_time(int argc, char *argv[], Timer* timer);
+void start_timer(Timer* timer); 
 
 #endif
