@@ -8,7 +8,8 @@
 #include <unistd.h>   // POSIX systems (Linux, macOS)
 #endif
 
-#include "timer.h" 
+#include "../include/timer.h"
+#include "../include/graphics.h" 
 
 int parse_time(int argc, char *argv[], Timer* timer) {
     
