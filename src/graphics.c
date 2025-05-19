@@ -57,14 +57,20 @@ void draw_box(int start_row, int start_col)
 
 	// Draw sides
 	printf("\033[%d;%dH", start_row + 1, start_col);
-	printf("│               │");
+	printf("│               │"); // spacing row
 	printf("\033[%d;%dH", start_row + 2, start_col);
-	printf("│               │");
+	printf("│               │"); // time is displayed here
 	printf("\033[%d;%dH", start_row + 3, start_col);
-	printf("│               │");
+	printf("│               │"); // spacing row
+	printf("\033[%d;%dH", start_row + 4, start_col);
+	printf("│               │"); // p-bar percentage 
+	printf("\033[%d;%dH", start_row + 5, start_col);
+	printf("│               │"); // p-bar
+	printf("\033[%d;%dH", start_row + 6, start_col);
+	printf("│               │"); // spacing row
 
 	// Draw bottom
-	printf("\033[%d;%dH", start_row + 4, start_col);
+	printf("\033[%d;%dH", start_row + 7, start_col);
 	printf("└───────────────┘");
 }
 
