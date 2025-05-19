@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -I./include
-SRCS = src/timer.c src/main.c src/graphics.c
+SRCS = src/timer.c src/main.c src/graphics.c src/p_bar.c
 OBJS = $(SRCS:.c=.o)
 TARGET = timer
 

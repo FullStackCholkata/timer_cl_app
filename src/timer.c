@@ -10,6 +10,7 @@
 
 #include "../include/timer.h"
 #include "../include/graphics.h"
+#include "../include/p_bar.h"
 
 int parse_time(int argc, char *argv[], Timer *timer)
 {
@@ -72,7 +73,6 @@ int parse_time(int argc, char *argv[], Timer *timer)
 
 void start_timer(Timer *timer)
 {
-	printf("\033[?25l");  // ANSI sequence to hide cursor
 	// Create a terminal details struct and fill it up with the size of teh current terminal
 	Terminal ter;
 	calculate_terminal_dimensions(&ter);
@@ -82,8 +82,9 @@ void start_timer(Timer *timer)
 
 	int total_seconds = timer->hours * 3600 + timer->minutes * 60 + timer->seconds;
 	int initial_total_seconds = total_seconds;
+	p_bar bar;
 
-	printf("Started timer for %02dh %02dm %02ds\n", timer->hours, timer->minutes, timer->seconds);
+	hide_cursor();
 
 	while (total_seconds > 0)
 	{
@@ -93,30 +94,16 @@ void start_timer(Timer *timer)
 		int remaining_m = (total_seconds % 3600) / 60;
 		int remaining_s = total_seconds % 60;
 
-		float p_bar_progress = 1.0f - ((float) total_seconds / initial_total_seconds);
-		int filled_blocks = (int) (p_bar_progress * 13);
-		int empty_blocks = 13 - filled_blocks;
+		update_bar_values(&bar, total_seconds, initial_total_seconds);
 
 		draw_box(start_row, start_col);
 
 		// Position cursor inside the box
 		printf("\033[%d;%dH", start_row + 2, start_col + 3);
 		printf("%02dh %02dm %02ds", remaining_h, remaining_m, remaining_s);
-		printf("\033[%d;%dH", start_row + 4, start_col + 7);
-		printf("%2d%%", (int)(p_bar_progress * 100));
-		for (int i = 0; i < 13; i++) {
-			printf("\033[%d;%dH", start_row + 5, start_col + i + 2);
-			if (i >= filled_blocks) {
-				printf("-");
-				fflush(stdout);
-			} else {
-				printf("█");
-				fflush(stdout);
-			}
-		}
 		
+		draw_p_bar(bar, start_row, start_col);
 		
-
 		#ifdef _WIN32
 				Sleep(1000);
 		#else
@@ -126,14 +113,5 @@ void start_timer(Timer *timer)
 		total_seconds--;
 	}
 
-	draw_box(start_row, start_col);
-	printf("\033[%d;%dH", start_row + 2, start_col + 2);
-	printf("Timer is done");
-	printf("\033[%d;%dH", start_row + 4, start_col + 6);
-	printf("100%%");
-	printf("\033[%d;%dH", start_row + 5, start_col + 2);
-	printf("█████████████");
-	fflush(stdout);
-	printf("\033[%d;1H", ter.t_rows);
-	printf("\033[?25h");  // ANSI sequence to show cursor
+	draw_end_box(ter, start_row, start_col);
 }

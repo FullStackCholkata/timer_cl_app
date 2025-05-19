@@ -9,6 +9,15 @@
 #endif
 
 #include "../include/graphics.h"
+#include "../include/p_bar.h"
+
+void hide_cursor() {
+	printf("\033[?25l");  // ANSI sequence to hide cursor
+}
+
+void show_cursor() {
+	printf("\033[?25h");  // ANSI sequence to show cursor
+}
 
 void clear_screen()
 {
@@ -74,5 +83,30 @@ void draw_box(int start_row, int start_col)
 	printf("└───────────────┘");
 }
 
-// Maybe the box should be a fixed size.
-// It doesn't really make sense to change the size when the timer always stays the same HH:MM:SS
+void draw_p_bar(p_bar bar, int start_row, int start_col) {
+	printf("\033[%d;%dH", start_row + 4, start_col + 7);
+	printf("%2d%%", bar.percentages);
+	for (int i = 0; i < 13; i++) {
+		printf("\033[%d;%dH", start_row + 5, start_col + i + 2);
+		if (i >= bar.filled) {
+			printf("-");
+			fflush(stdout);
+		} else {
+			printf("█");
+			fflush(stdout);
+		}
+	}
+}
+
+void draw_end_box(Terminal ter, int start_row, int start_col) {
+	draw_box(start_row, start_col);
+	printf("\033[%d;%dH", start_row + 2, start_col + 2);
+	printf("Timer is done");
+	printf("\033[%d;%dH", start_row + 4, start_col + 6);
+	printf("100%%");
+	printf("\033[%d;%dH", start_row + 5, start_col + 2);
+	printf("█████████████");
+	fflush(stdout);
+	show_cursor();
+	printf("\033[%d;1H", ter.t_rows);
+}
